@@ -12,8 +12,11 @@ jobs:
         Enable-PSRemoting -Force
         Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-        net user runneradmin WinRDP@2025!
+        net user Ahmaddev123 WinRDP@2025! /add
         net localgroup administrators Ahmaddev123 /add
 
-    - name: Display IP Address
+    - name: Display internal IP
       run: ipconfig
+
+    - name: Display external IP
+      run: curl ifconfig.me
