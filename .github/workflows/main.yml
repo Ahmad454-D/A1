@@ -13,7 +13,7 @@ jobs:
         Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         net user runneradmin WinRDP@2025!
-        net localgroup administrators runneradmin /add
+        net localgroup administrators Ahmaddev123 /add
 
     - name: Display IP Address
       run: ipconfig
