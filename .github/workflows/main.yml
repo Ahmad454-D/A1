@@ -1,4 +1,4 @@
-name: Windows RDP
+name: Free RDP via GitHub Actions
 
 on:
   workflow_dispatch:
@@ -6,17 +6,20 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    timeout-minutes: 360
+
     steps:
-    - name: Enable RDP
+    - name: Enable RDP and Create User
       run: |
-        Enable-PSRemoting -Force
-        Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
-        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         net user Ahmaddev123 WinRDP@2025! /add
         net localgroup administrators Ahmaddev123 /add
-
-    - name: Display internal IP
-      run: ipconfig
-
-    - name: Display external IP
-      run: curl ifconfig.me
+        Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Write-Host "User: Ahmaddev123"
+        Write-Host "Pass: WinRDP@2025!"
+        ipconfig
+        curl ifconfig.me
+    - name: Keep session alive
+      run: |
+        while ($true) { Start-Sleep -Seconds 60 }
+      shell: powershell
